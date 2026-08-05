@@ -1,0 +1,6 @@
+{
+  "name": "LEAVEHub - Employee Leave Management System",
+  "description": "Comprehensive role-based leave management system for employees and administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
