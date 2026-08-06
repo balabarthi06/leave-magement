@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import { getApiUrl } from '../utils/api';
 const AuthContext = createContext(undefined);
 
 const CURRENT_USER_STORAGE_KEY = 'leaveflow_current_user_v1';
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const res = await fetch('/api/auth/me', {
+        const res = await fetch(getApiUrl('/api/auth/me'), {
           headers: {
             'Authorization': `Bearer ${savedToken}`,
             'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(getApiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (formData) => {
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(getApiUrl('/api/auth/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -158,7 +158,7 @@ export const AuthProvider = ({ children }) => {
     if (!savedToken) return null;
 
     try {
-      const res = await fetch('/api/auth/me', {
+      const res = await fetch(getApiUrl('/api/auth/me'), {
         headers: {
           'Authorization': `Bearer ${savedToken}`,
           'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ export const AuthProvider = ({ children }) => {
   const changePassword = async ({ currentPassword, newPassword, confirmPassword }) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/users/change-password', {
+      const res = await fetch(getApiUrl('/api/users/change-password'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/users/profile', {
+      const res = await fetch(getApiUrl('/api/users/profile'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -239,7 +239,7 @@ export const AuthProvider = ({ children }) => {
       setUser(target);
       localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(target));
       try {
-        const res = await fetch('/api/auth/demo-token', {
+        const res = await fetch(getApiUrl('/api/auth/demo-token'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: target.id })
