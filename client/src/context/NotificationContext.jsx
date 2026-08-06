@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { NotificationToastAnimation } from '../components/common/NotificationToastAnimation';
-
+import { getApiUrl } from '../utils/api';
 const NotificationContext = createContext(undefined);
 
 const JWT_TOKEN_KEY = 'leavehub_token';
@@ -114,7 +114,7 @@ export const NotificationProvider = ({ children }) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
       console.log(`[NotificationContext.fetchNotifications] Fetching notifications for user: ${user.name} (${user.role}, ID: ${user.id}). Token attached: ${Boolean(savedToken)}`);
-      const res = await fetch('/api/notifications', {
+      const res = await fetch(getApiUrl('/api/notifications'), {
         headers: {
           'Authorization': `Bearer ${savedToken || ''}`,
           'Cache-Control': 'no-cache'
@@ -152,7 +152,7 @@ export const NotificationProvider = ({ children }) => {
   const addNotification = async (notifData) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/notifications', {
+      const res = await fetch(getApiUrl('/api/notifications'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ export const NotificationProvider = ({ children }) => {
 
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      await fetch(`/api/notifications/${id}/read`, {
+      await fetch(getApiUrl(`/api/notifications/${id}/read`), {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${savedToken || ''}`
@@ -194,7 +194,7 @@ export const NotificationProvider = ({ children }) => {
 
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      await fetch('/api/notifications/read-all', {
+      await fetch(getApiUrl('/api/notifications/read-all'), {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${savedToken || ''}`
@@ -250,3 +250,4 @@ export const useNotification = () => {
   }
   return context;
 };
+

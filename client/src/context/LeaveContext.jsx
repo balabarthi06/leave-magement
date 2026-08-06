@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { useNotification } from './NotificationContext';
-
+import { getApiUrl } from '../utils/api';
 const LeaveContext = createContext(undefined);
 
 const JWT_TOKEN_KEY = 'leavehub_token';
@@ -16,7 +16,7 @@ export const LeaveProvider = ({ children }) => {
   const fetchHolidays = useCallback(async () => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/holidays', {
+      const res = await fetch(getApiUrl('/api/holidays'), {
         headers: {
           'Authorization': `Bearer ${savedToken || ''}`
         }
@@ -35,7 +35,7 @@ export const LeaveProvider = ({ children }) => {
   const addHoliday = async (holidayData) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/holidays', {
+      const res = await fetch(getApiUrl('/api/holidays'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const LeaveProvider = ({ children }) => {
   const updateHoliday = async (id, holidayData) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/holidays/${id}`, {
+      const res = await fetch(getApiUrl(`/api/holidays/${id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteHoliday = async (id) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/holidays/${id}`, {
+      const res = await fetch(getApiUrl(`/api/holidays/${id}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${savedToken}`
@@ -105,7 +105,7 @@ export const LeaveProvider = ({ children }) => {
   const fetchLeaveRequests = useCallback(async () => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/leaves', {
+      const res = await fetch(getApiUrl('/api/leaves'), {
         headers: {
           'Authorization': `Bearer ${savedToken || ''}`
         }
@@ -155,7 +155,7 @@ export const LeaveProvider = ({ children }) => {
 
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch('/api/leaves', {
+      const res = await fetch(getApiUrl('/api/leaves'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ export const LeaveProvider = ({ children }) => {
   const updateLeaveRequest = async (id, data) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/leaves/${id}`, {
+      const res = await fetch(getApiUrl(`/api/leaves/${id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteLeaveRequest = async (id) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/leaves/${id}`, {
+      const res = await fetch(getApiUrl(`/api/leaves/${id}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${savedToken}`
@@ -237,7 +237,7 @@ export const LeaveProvider = ({ children }) => {
   const cancelLeaveRequest = async (id) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/leaves/${id}/cancel`, {
+      const res = await fetch(getApiUrl(`/api/leaves/${id}/cancel`), {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${savedToken}`
@@ -264,7 +264,7 @@ export const LeaveProvider = ({ children }) => {
   const approveLeaveRequest = async (id, reviewerName) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/leaves/${id}/approve`, {
+      const res = await fetch(getApiUrl(`/api/leaves/${id}/approve`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -293,7 +293,7 @@ export const LeaveProvider = ({ children }) => {
   const rejectLeaveRequest = async (id, remarks, reviewerName) => {
     try {
       const savedToken = localStorage.getItem(JWT_TOKEN_KEY);
-      const res = await fetch(`/api/leaves/${id}/reject`, {
+      const res = await fetch(getApiUrl(`/api/leaves/${id}/reject`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
